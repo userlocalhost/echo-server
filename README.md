@@ -1,7 +1,7 @@
 What is this?
 =============
 
-This repository has a couple of implementations of echo server which simply responds user sending data. `generic` implementation uses gen_tcp module to receive data from client. Another implenetation, named `nonblocking`, uses prim_inet module for nonblocking connection. 
+This repository has a couple of implementations of echo server, simply responds user sending data, written in [Erlang](http://www.erlang.org/). `generic` implementation uses gen_tcp module to receive data from client. Another implenetation, named `nonblocking`, uses prim_inet module for nonblocking connection. 
 
 Building
 ========
