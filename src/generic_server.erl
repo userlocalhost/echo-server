@@ -1,4 +1,4 @@
--module(server).
+-module(generic_server).
 -export([start/1, init/1, recv/1]).
 
 start(Port) ->

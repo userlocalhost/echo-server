@@ -1,4 +1,4 @@
--module(server).
+-module(nonblocking_server).
 -export([start/1, init/1, recv/1, handle_info/2]).
 
 start(Port) ->
@@ -29,7 +29,7 @@ close_socket(Socket) ->
   io:format("socket close~n"),
   gen_tcp:close(Socket).
 
-handle_info({inet_async, ListSock, Ref, {ok, Socket}}, State) ->
+handle_info({inet_async, ListSock, _Ref, {ok, Socket}}, _State) ->
   prim_inet:async_accept(ListSock, -1),
 
   % delegate Socket control to new process
@@ -44,7 +44,4 @@ handle_info({inet_async, ListSock, Ref, {ok, Socket}}, State) ->
 set_sockopt(ListSock, Socket) ->
   true = inet_db:register_socket(Socket, inet_tcp),
   {ok, Opts} = prim_inet:getopts(ListSock, [active, nodelay, keepalive, delay_send, priority, tos]),
-  case prim_inet:setopts(Socket, Opts) of
-    ok  -> ok;
-    Error -> gen_tcp:close(Socket)
-  end.
+  ok = prim_inet:setopts(Socket, Opts).
